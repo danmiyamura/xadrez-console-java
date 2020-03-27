@@ -25,7 +25,7 @@ public class ChessMatch {
 		return mat;
 	}
 	
-	public boolean[][] possibleMoves(ChessPosition sourcePosition){
+	public boolean[][] possibleMoves(ChessPosition sourcePosition) {
 		Position position = sourcePosition.toPosition();
 		validateSourcePosition(position);
 		return board.piece(position).possibleMoves();
@@ -34,25 +34,10 @@ public class ChessMatch {
 	public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
 		Position source = sourcePosition.toPosition();
 		Position target = targetPosition.toPosition();
-		validateSourcePosition(source);	
+		validateSourcePosition(source);
 		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);
 		return (ChessPiece)capturedPiece;
-	}
-	
-	private void validateSourcePosition(Position position) {
-		if(!board.thereIsAPiece(position)) {
-			throw new ChessException("Não existe uma peça na posição.");
-		}
-		if (!board.piece(position).isThereAnyPossibleMove()) {
-			throw new ChessException("Nao existe movimentos possiveis para a peca escolhida.");
-		}
-	}
-	
-	private void validateTargetPosition(Position source, Position target) {
-		if(!board.piece(source).possibleMove(target)) {
-			throw new ChessException("A peca escolhida nao pode se mover para posicao de destino.");
-		}
 	}
 	
 	private Piece makeMove(Position source, Position target) {
@@ -60,6 +45,21 @@ public class ChessMatch {
 		Piece capturedPiece = board.removePiece(target);
 		board.placePiece(p, target);
 		return capturedPiece;
+	}
+	
+	private void validateSourcePosition(Position position) {
+		if (!board.thereIsAPiece(position)) {
+			throw new ChessException("Nao existe nenhuma peca na posicao de origem.");
+		}
+		if (!board.piece(position).isThereAnyPossibleMove()) {
+			throw new ChessException("Nao existe movimentos para a peca selecionada");
+		}
+	}
+	
+	private void validateTargetPosition(Position source, Position target) {
+		if (!board.piece(source).possibleMove(target)) {
+			throw new ChessException("A peca escolhida nao pode mover para essa posicao.");
+		}
 	}
 	
 	private void placeNewPiece(char column, int row, ChessPiece piece) {

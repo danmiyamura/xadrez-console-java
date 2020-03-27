@@ -3,12 +3,13 @@ package chess;
 import boardgame.Position;
 
 public class ChessPosition {
+	
 	private char column;
 	private int row;
 	
 	public ChessPosition(char column, int row) {
-		if(column <'a' || column > 'h' || row < 1 || row > 8) {
-			throw new ChessException("Erro ao instanciar a posição do tabuleiro. Valores válidos de a1 à h8.");
+		if (column < 'a' || column > 'h' || row < 1 || row > 8) {
+			throw new ChessException("Erro ao definir posicao. Valores validos de a1 a h8.");
 		}
 		this.column = column;
 		this.row = row;
@@ -23,7 +24,7 @@ public class ChessPosition {
 	}
 
 	protected Position toPosition() {
-		return new Position(8 - row , column - 'a');
+		return new Position(8 - row, column - 'a');
 	}
 	
 	protected static ChessPosition fromPosition(Position position) {
@@ -31,7 +32,7 @@ public class ChessPosition {
 	}
 	
 	@Override
-	public String toString(){
+	public String toString() {
 		return "" + column + row;
 	}
 }
